@@ -1,0 +1,14 @@
+﻿get all sensors (GET)
+api/sensors
+
+get sensor by id (GET)
+api/sensors/1
+
+add new sensor (POST) + json body met longitue en latitude
+api/sensors
+
+edit existing sensor (PUT) + json body met longitue en latitude
+api/sensors/id
+
+delete sensor by id (DELETE)
+api/sensors/id

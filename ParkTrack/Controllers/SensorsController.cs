@@ -3,6 +3,7 @@ using ParkTrack.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
+using ParkTrack.Models;
 
 namespace ParkTrack.Controllers
 {
@@ -17,7 +18,9 @@ namespace ParkTrack.Controllers
             context = _context;
         }
 
-        // GET: api/Sensors
+        //////////////////////////////////// 
+        ///     GET: api/Sensors    ////////
+        //////////////////////////////////// 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,40 +35,112 @@ namespace ParkTrack.Controllers
                 return NotFound(ex);
             }
 
-        }   
+        }
 
-        // GET: api/Sensors/5
+        ///////////////////////////////// 
+        ///     GET: api/Sensors/5  /////
+        /////////////////////////////////
         [HttpGet("{id}", Name = "GetById")]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
+
                 var sensor = await context.Sensors.FirstOrDefaultAsync(s => s.SensorID == id);
 
-                return Ok(sensor);
+                if (sensor != null)
+                {
+                    return Ok(sensor);
+                }
+                return NotFound();
             }
             catch (Exception ex)
             {
                 return NotFound(ex);
             }
         }
-        
-        // POST: api/Sensors
-        [HttpPost]
-        public void Post([FromBody]string value)
+
+        ///////////////////////////////// 
+        ///     POST: api/Sensors   /////
+        /// /////////////////////////////
+        [HttpPost, ActionName("AddNewSensor")]
+        public async Task<IActionResult> AddNewSensor([FromBody] Sensor sensor)
         {
+            try
+            {
+                // check if form was filled in correctly
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                await context.Sensors.AddAsync(sensor);
+                await context.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
-        
-        // PUT: api/Sensors/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+
+        ///////////////////////////////// 
+        ///    PUT: api/Sensors/1   /////
+        /////////////////////////////////
+        [HttpPut("{id}"), ActionName("EditSensorById")]
+        public async Task<IActionResult> EditSensorById(int id, [FromBody] Sensor sensor)
         {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var sensorToEdit = await context.Sensors.FirstOrDefaultAsync(s => s.SensorID == id);
+
+
+                if (sensorToEdit != null)
+                {
+                    sensorToEdit.longitude = sensor.longitude;
+                    sensorToEdit.latitude = sensor.latitude;
+                    context.Sensors.Update(sensorToEdit);
+                    await context.SaveChangesAsync();
+                    return Ok();
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
-        
-        // DELETE: api/ApiWithActions/5
+
+        ///////////////////////////////// 
+        ///  DELETE: api/Sensors/5  /////
+        /////////////////////////////////
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteSensorById(int id)
         {
+            try
+            {
+                var sensor = await context.Sensors.FirstOrDefaultAsync(s => s.SensorID == id);
+
+                if (sensor != null)
+                {
+                    context.Sensors.Remove(sensor);
+                    await context.SaveChangesAsync();
+                    return Ok();
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
