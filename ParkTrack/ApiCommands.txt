@@ -12,3 +12,10 @@ api/sensors/id
 
 delete sensor by id (DELETE)
 api/sensors/id
+
+Voorbeeld JSON BODY:
+
+	{
+        "latitude": 51.23013,
+        "longitude": 4.4161725
+    }
