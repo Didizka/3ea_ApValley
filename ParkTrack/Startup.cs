@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using ParkTrack.Data;
 
 namespace ParkTrack
 {
@@ -23,7 +25,20 @@ namespace ParkTrack
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Database connection
+            services.AddDbContext<SensorContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Cross origin 
+            services.AddCors(o => o.AddPolicy("AllowClient", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddMvc();
+            services.AddMvcCore().AddDataAnnotations().AddJsonFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +49,9 @@ namespace ParkTrack
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseCors("AllowClient");
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
