@@ -32,7 +32,7 @@ namespace ParkTrack.Controllers
                 return NotFound(ex);
             }
 
-        }
+        }   
 
         // GET: api/Sensors/5
         [HttpGet("{id}", Name = "GetById")]
