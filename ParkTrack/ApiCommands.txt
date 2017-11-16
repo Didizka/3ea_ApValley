@@ -4,16 +4,16 @@ api/sensors
 get sensor by id (GET)
 api/sensors/1
 
-add new sensor (POST) + json body met longitue en latitude
+add new sensor (POST) + json body met longitue en latitude*
 api/sensors
 
-edit existing sensor (PUT) + json body met longitue en latitude
+edit existing sensor (PUT) + json body met longitue en latitude*
 api/sensors/id
 
 delete sensor by id (DELETE)
 api/sensors/id
 
-Voorbeeld JSON BODY:
+*Voorbeeld JSON BODY:
 
 	{
         "latitude": 51.23013,

@@ -8,5 +8,11 @@ namespace ParkTrack.Data
 
         public SensorContext(DbContextOptions options) : base(options) { }
         public DbSet<Sensor> Sensors { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Sensor>().ToTable("Sensors");
+        }
     }
 }

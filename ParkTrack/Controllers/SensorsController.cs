@@ -28,7 +28,8 @@ namespace ParkTrack.Controllers
             {
                 var sensors = await context.Sensors.ToListAsync();
 
-                return Ok(sensors);
+                if (sensors.Count > 0) return Ok(sensors);
+                return NotFound();
             }
             catch (Exception ex)
             {
