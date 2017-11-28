@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ParkTrack.Models
 {
@@ -12,5 +9,11 @@ namespace ParkTrack.Models
         public int SensorID { get; set; }
         public float latitude { get; set; }
         public float longitude { get; set; }
+        
+        [StringLength(64)]
+        public string Token { get; set; }
+
+
+
     }
 }

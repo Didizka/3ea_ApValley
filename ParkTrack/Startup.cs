@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ParkTrack.Data;
+using ParkTrack.Models.Repositories;
 
 namespace ParkTrack
 {
@@ -19,10 +21,15 @@ namespace ParkTrack
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add automapper to repository
+            services.AddAutoMapper();
+            //Inject UserRepo interface
+            services.AddScoped<ISensorRepository, SensorRepository>();
+
             // Database connection
             services.AddDbContext<SensorContext>(options =>
-                // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             // Cross origin 
             services.AddCors(o => o.AddPolicy("AllowClient", builder =>

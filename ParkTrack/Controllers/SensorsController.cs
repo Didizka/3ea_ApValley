@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
 using ParkTrack.Models;
+using ParkTrack.Models.Repositories;
 
 namespace ParkTrack.Controllers
 {
@@ -11,25 +12,42 @@ namespace ParkTrack.Controllers
     [Route("api/Sensors")]
     public class SensorsController : Controller
     {
-        private readonly SensorContext context;
+        private readonly ISensorRepository sensors;
 
-        public SensorsController(SensorContext _context)
+        public SensorsController(ISensorRepository sensorsRepository)
         {
-            context = _context;
+            this.sensors = sensorsRepository;
         }
 
-        //////////////////////////////////// 
-        ///     GET: api/Sensors    ////////
-        //////////////////////////////////// 
+        ///////////////////////////////
+        ///  GET: api/Sensors  ////////
+        ///////////////////////////////
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
             try
             {
-                var sensors = await context.Sensors.ToListAsync();
+                return Ok("Please provide admin token to access the sensor data");
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
 
-                if (sensors.Count > 0) return Ok(sensors);
-                return NotFound();
+        }
+
+        //////////////////////////////////////////
+        ///  GET: api/Sensors/admintoken  ////////
+        ////////////////////////////////////////// 
+        [HttpGet("{token}", Name = "GetById/{token}")]
+        public async Task<IActionResult> GetAll(string token)
+        {
+            try
+            {
+                var result = await sensors.GetAllSensors(token);
+
+                if (result == null) return NotFound("No sensors found");
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -41,19 +59,20 @@ namespace ParkTrack.Controllers
         ///////////////////////////////// 
         ///     GET: api/Sensors/5  /////
         /////////////////////////////////
-        [HttpGet("{id}", Name = "GetById")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:int}/{token}", Name = "GetById/{id:int}/{token}")]
+        public async Task<IActionResult> GetById(int id, string token)
         {
             try
             {
 
-                var sensor = await context.Sensors.FirstOrDefaultAsync(s => s.SensorID == id);
+                var result = await sensors.GetSensorById(id, token);
 
-                if (sensor != null)
+                if (result == null)
                 {
-                    return Ok(sensor);
+                    return NotFound("Sensor with ID: " + id + " not found");                    
                 }
-                return NotFound();
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -64,8 +83,8 @@ namespace ParkTrack.Controllers
         ///////////////////////////////// 
         ///     POST: api/Sensors   /////
         /// /////////////////////////////
-        [HttpPost, ActionName("AddNewSensor")]
-        public async Task<IActionResult> AddNewSensor([FromBody] Sensor sensor)
+        [HttpPost("{token}"), ActionName("AddNewSensor")]
+        public async Task<IActionResult> AddNewSensor(string token, [FromBody] Sensor sensor)
         {
             try
             {
@@ -75,10 +94,11 @@ namespace ParkTrack.Controllers
                     return BadRequest(ModelState);
                 }
 
-                await context.Sensors.AddAsync(sensor);
-                await context.SaveChangesAsync();
+                var sensorAdded = await sensors.AddNewSensor(token, sensor);
+                if (sensorAdded) return Ok("New sensor has been successfully added");
+                return BadRequest("There was an error while creating a new sensor. Please try again later");
 
-                return Ok();
+                //return Ok("New sensor has been added to the database");
             }
             catch (Exception ex)
             {
@@ -89,8 +109,8 @@ namespace ParkTrack.Controllers
         ///////////////////////////////// 
         ///    PUT: api/Sensors/1   /////
         /////////////////////////////////
-        [HttpPut("{id}"), ActionName("EditSensorById")]
-        public async Task<IActionResult> EditSensorById(int id, [FromBody] Sensor sensor)
+        [HttpPut("{id}/{token}"), ActionName("EditSensorById")]
+        public async Task<IActionResult> EditSensorById(int id, string token, [FromBody] Sensor sensor)
         {
             try
             {
@@ -99,19 +119,12 @@ namespace ParkTrack.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var sensorToEdit = await context.Sensors.FirstOrDefaultAsync(s => s.SensorID == id);
+                var result = await sensors.EditSensorById(id, token, sensor);
+
+                if (result) return Ok("Sensor with ID: " + id + " has been successfully updated");
 
 
-                if (sensorToEdit != null)
-                {
-                    sensorToEdit.longitude = sensor.longitude;
-                    sensorToEdit.latitude = sensor.latitude;
-                    context.Sensors.Update(sensorToEdit);
-                    await context.SaveChangesAsync();
-                    return Ok();
-                }
-
-                return NotFound();
+                return NotFound("Sensor with ID: " + id + " not found");
             }
             catch (Exception ex)
             {
@@ -122,21 +135,16 @@ namespace ParkTrack.Controllers
         ///////////////////////////////// 
         ///  DELETE: api/Sensors/5  /////
         /////////////////////////////////
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSensorById(int id)
+        [HttpDelete("{id}/{token}")]
+        public async Task<IActionResult> DeleteSensorById(int id, string token)
         {
             try
             {
-                var sensor = await context.Sensors.FirstOrDefaultAsync(s => s.SensorID == id);
+                var result = await sensors.DeleteSensorById(id, token);
 
-                if (sensor != null)
-                {
-                    context.Sensors.Remove(sensor);
-                    await context.SaveChangesAsync();
-                    return Ok();
-                }
+                if (result) return Ok("Sensor with ID: " + id + " has been successfully deleted");
 
-                return NotFound();
+                return NotFound("Sensor with ID: " + id + " not found");
             }
             catch (Exception ex)
             {

@@ -1,4 +1,6 @@
-﻿get all sensors (GET)
+﻿URL: http://parktrack.ddns.net/api/sensors
+
+get all sensors (GET)
 api/sensors
 
 get sensor by id (GET)
