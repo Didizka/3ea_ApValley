@@ -21,27 +21,34 @@ export class SensorMapComponent implements OnInit {
 
   ngOnInit() {
     this.dashboardService.getAllSensors().subscribe(response => {
-      console.log(response);
+      // console.log(response);
       this.sensors = response;
       this.getCurrentPosition();
     });
   }
 
+  // Needs SSL support
   getCurrentPosition() {
-    if (!!navigator.geolocation) {
-      // Supported
-      navigator.geolocation.getCurrentPosition(position => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        console.log(position);
-        this.initMap();
-        this.addMarkers();
-      });
-    } else {
-      // Not supported, use hardcoded coords of school
-      this.lat = 51.184742;
-      this.lng = 4.4410123;
-    }
+    // if (!!navigator.geolocation) {
+    //   // Supported
+    //   navigator.geolocation.getCurrentPosition(position => {
+    //     this.lat = position.coords.latitude;
+    //     this.lng = position.coords.longitude;
+    //     // console.log(position);
+    //     this.initMap();
+    //     this.addMarkers();
+    //   });
+    // } else {
+    //   // Not supported, use hardcoded coords of school
+    //   this.lat = 51.184742;
+    //   this.lng = 4.4410123;
+    //   this.initMap();
+    //   this.addMarkers();
+    // }
+    this.lat = 51.184742;
+    this.lng = 4.4410123;
+    this.initMap();
+    this.addMarkers();
   }
 
   initMap() {

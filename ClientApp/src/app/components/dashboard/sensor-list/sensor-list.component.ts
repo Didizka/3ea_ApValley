@@ -9,26 +9,26 @@ import { DashboardService } from '../services/dashboard.service';
 })
 export class SensorListComponent implements OnInit {
   sensors: any = [];
-  url = 'http://localhost:5050/api/sensors/';
+  url = 'http://parktrack.ddns.net/api/sensors/';
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
     this.dashboardService.getAllSensors().subscribe(response => {
-      console.log(response);
+      // console.log(response);
       this.sensors = response;
     });
   }
 
-  goToDetailsPage(sensor: any) {
-    console.log(sensor);
-  }
+  // goToDetailsPage(sensor: any) {
+  //   console.log(sensor);
+  // }
 
-  goToEditPage(sensor: any) {
-    console.log(sensor);
-  }
+  // goToEditPage(sensor: any) {
+  //   console.log(sensor);
+  // }
 
-  goToDeletePage(sensor: any) {
-    console.log(sensor);
-  }
+  // goToDeletePage(sensor: any) {
+  //   console.log(sensor);
+  // }
 }
