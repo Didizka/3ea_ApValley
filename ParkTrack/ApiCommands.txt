@@ -1,23 +1,24 @@
 ﻿URL: http://parktrack.ddns.net/api/sensors
 
 get all sensors (GET)
-api/sensors
+api/sensors/admintoken
 
 get sensor by id (GET)
-api/sensors/1
+api/sensors/1/usertoken
 
 add new sensor (POST) + json body met longitue en latitude*
-api/sensors
+api/sensors/admintoken
 
 edit existing sensor (PUT) + json body met longitue en latitude*
-api/sensors/id
+api/sensors/id/admintoken
 
 delete sensor by id (DELETE)
-api/sensors/id
+api/sensors/id/admintoken
 
 *Voorbeeld JSON BODY:
 
 	{
         "latitude": 51.23013,
-        "longitude": 4.4161725
+        "longitude": 4.4161725,
+		"token" : "a04f2752232f2c682594b5239e8204ed403f4ace2b4d325817645846bc9f4b1b"
     }

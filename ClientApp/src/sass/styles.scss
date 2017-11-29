@@ -1,0 +1,12 @@
+// Import normalize.css
+@import '~normalize.css/normalize.css';
+
+
+// Import subfiles
+@import './variables';
+@import './mixins';
+
+// Make the page to take at least 100% height of the viewport
+html {
+    min-height: 100%;
+  }
