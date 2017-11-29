@@ -28,8 +28,8 @@ namespace ParkTrack
 
             // Database connection
             services.AddDbContext<SensorContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             // Cross origin 
             services.AddCors(o => o.AddPolicy("AllowClient", builder =>

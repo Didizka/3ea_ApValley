@@ -1,4 +1,4 @@
-import { DashboardService } from './components/services/dashboard.service';
+
 import { routes } from './routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -6,7 +6,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './components/app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SensorListComponent } from './components/dashboard/sensor-list/sensor-list.component';
+import { DashboardService } from './components/dashboard/services/dashboard.service';
+import { SensorMapComponent } from './components/dashboard/sensor-map/sensor-map.component';
+import { NavSidebarComponent } from './components/nav-sidebar/nav-sidebar.component';
 
 
 
@@ -14,14 +20,18 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    SensorListComponent,
+    NavbarComponent,
+    SensorMapComponent,
+    NavSidebarComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
-    HttpModule
+    HttpModule,
+    NgxQRCodeModule
   ],
   providers: [ DashboardService ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

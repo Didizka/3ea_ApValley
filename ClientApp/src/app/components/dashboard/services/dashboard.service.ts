@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DashboardService {
-  private url = 'http://localhost:5050/api/sensors/';
+  // private url = 'http://localhost:5050/api/sensors/';
+  private url = 'http://parktrack.ddns.net/api/sensors/';
   private adminToken = 'c55add77fa7f6c27f7c5fa819b4752af1fc5af9cdb103452e';
 
   constructor(private http: Http) { }

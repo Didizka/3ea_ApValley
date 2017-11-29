@@ -1,0 +1,37 @@
+<h2>List of all sensors</h2>
+
+<div *ngIf="!sensors">Loading...</div>
+
+<div class="table-responsive" *ngIf="sensors">
+  <table class="table table-striped">
+    <tr>
+      <thead>
+        <th>SensorID</th>
+        <th>Latidue</th>
+        <th>Longitude</th>
+        <th>Link with token</th>
+        <th>QR Code</th>
+        <!-- <th>Actions</th> -->
+      </thead>
+      <tbody>
+        <tr *ngFor="let sensor of sensors">
+          <td>{{sensor.sensorID}}</td>
+          <td>{{sensor.latitude}}</td>
+          <td>{{sensor.longitude}}</td>
+          <td>
+            <a href="#">{{url + sensor.sensorID + "/" + sensor.token}}</a>
+          </td>
+          <td>
+            <ngx-qrcode qrc-element-type="url" [qrc-value]="url + sensor.sensorID + '/' + sensor.token"></ngx-qrcode>
+            <td>
+              <!-- <td>
+                          <a (click)="goToDetailsPage(sensor)" class="btn btn-success">Details</a>
+                          <a (click)="goToEditPage(sensor)" class="btn btn-primary">Edit</a>
+                          <a (click)="goToDeletePage(sensor)" class="btn btn-danger">Delete</a>
+                        </td> -->
+        </tr>
+      </tbody>
+    </tr>
+  </table>
+</div>
+
