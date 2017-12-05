@@ -1,0 +1,6 @@
+<h2>User view</h2>
+
+<div *ngIf="!sensor && !isVerified">Loading...</div>
+<div *ngIf="!sensor && isVerified">No sensor with ID: {{sensorID}} found</div>
+
+    <div id="map"></div>

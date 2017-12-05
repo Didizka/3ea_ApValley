@@ -23,6 +23,14 @@ export class DashboardService {
       .catch(this.handleError);
   }
 
+  getSensorsByIdWithToken(sensorId, token) {
+    const request = sensorId + '/' + token;
+    console.log(request);
+    return this.http.get(this.url + sensorId + '/' + token, {headers: this.headers})
+      .map(response => <any>(<Response>response).json())
+      .catch(this.handleError);
+  }
+
   private handleError(error: any) {
     if (error.status === 500) {
       console.log('Error: 500' );

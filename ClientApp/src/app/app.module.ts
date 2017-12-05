@@ -13,6 +13,7 @@ import { SensorListComponent } from './components/dashboard/sensor-list/sensor-l
 import { DashboardService } from './components/dashboard/services/dashboard.service';
 import { SensorMapComponent } from './components/dashboard/sensor-map/sensor-map.component';
 import { NavSidebarComponent } from './components/nav-sidebar/nav-sidebar.component';
+import { UserMapComponent } from './components/dashboard/user-map/user-map.component';
 
 
 
@@ -23,7 +24,8 @@ import { NavSidebarComponent } from './components/nav-sidebar/nav-sidebar.compon
     SensorListComponent,
     NavbarComponent,
     SensorMapComponent,
-    NavSidebarComponent
+    NavSidebarComponent,
+    UserMapComponent
   ],
   imports: [
     BrowserModule,
