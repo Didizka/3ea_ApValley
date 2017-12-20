@@ -13,6 +13,10 @@ namespace ParkTrack.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Sensor>().ToTable("Sensors");
+
+            modelBuilder.Entity<Sensor>()
+                .Property(b => b.TokenAddedAt)
+                .HasDefaultValueSql("getdate()");
         }
     }
 }

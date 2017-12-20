@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class SensorListComponent implements OnInit {
   sensors: any = [];
-  url = 'http://parktrack-admin.ddns.net/user-map/';
-  // url = 'http://localhost:5050/api/sensors/';
+  // url = 'http://parktrack-admin.ddns.net/user-map/';
+  url = 'http://localhost:5050/api/sensors/';
 
   constructor(private dashboardService: DashboardService, private router: Router) { }
 

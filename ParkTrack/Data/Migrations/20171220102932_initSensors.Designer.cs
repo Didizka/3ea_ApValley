@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using ParkTrack.Data;
 using System;
@@ -11,8 +10,8 @@ using System;
 namespace ParkTrack.Data.Migrations
 {
     [DbContext(typeof(SensorContext))]
-    [Migration("20171114153450_SensorsInitialized")]
-    partial class SensorsInitialized
+    [Migration("20171220102932_initSensors")]
+    partial class initSensors
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,14 +22,21 @@ namespace ParkTrack.Data.Migrations
 
             modelBuilder.Entity("ParkTrack.Models.Sensor", b =>
                 {
-                    b.Property<int>("SensorID")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("SerialNumber")
+                        .HasMaxLength(15);
+
+                    b.Property<string>("Token")
+                        .HasMaxLength(32);
+
+                    b.Property<DateTime>("TokenAddedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<float>("latitude");
 
                     b.Property<float>("longitude");
 
-                    b.HasKey("SensorID");
+                    b.HasKey("SerialNumber");
 
                     b.ToTable("Sensors");
                 });
