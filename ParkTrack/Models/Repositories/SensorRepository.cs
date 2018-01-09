@@ -110,6 +110,7 @@ namespace ParkTrack.Models.Repositories
                 if (token == "c55add77fa7f6c27f7c5fa819b4752af1fc5af9cdb103452e")
                 {
                     sensor.Token = TokenGenerator.generateToken();
+                    sensor.TokenAddedAt = DateTime.Now;
                     await context.Sensors.AddAsync(sensor);
                     await context.SaveChangesAsync();
                     return true;

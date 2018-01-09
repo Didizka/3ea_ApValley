@@ -10,7 +10,7 @@ using System;
 namespace ParkTrack.Data.Migrations
 {
     [DbContext(typeof(SensorContext))]
-    [Migration("20171220102932_initSensors")]
+    [Migration("20171220125327_initSensors")]
     partial class initSensors
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,9 +28,7 @@ namespace ParkTrack.Data.Migrations
                     b.Property<string>("Token")
                         .HasMaxLength(32);
 
-                    b.Property<DateTime>("TokenAddedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getdate()");
+                    b.Property<DateTime>("TokenAddedAt");
 
                     b.Property<float>("latitude");
 

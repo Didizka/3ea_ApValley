@@ -27,9 +27,7 @@ namespace ParkTrack.Data.Migrations
                     b.Property<string>("Token")
                         .HasMaxLength(32);
 
-                    b.Property<DateTime>("TokenAddedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getdate()");
+                    b.Property<DateTime>("TokenAddedAt");
 
                     b.Property<float>("latitude");
 

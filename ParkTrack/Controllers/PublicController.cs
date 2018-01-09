@@ -46,8 +46,6 @@ namespace ParkTrack.Controllers
             {
                 return NotFound(ex);
             }
-        }
-        
-        
+        }      
     }
 }

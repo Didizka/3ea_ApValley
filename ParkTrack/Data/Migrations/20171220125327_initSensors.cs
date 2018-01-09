@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
-using System.Collections.Generic;
 
 namespace ParkTrack.Data.Migrations
 {
@@ -14,7 +13,7 @@ namespace ParkTrack.Data.Migrations
                 {
                     SerialNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Token = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
-                    TokenAddedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    TokenAddedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     latitude = table.Column<float>(type: "real", nullable: false),
                     longitude = table.Column<float>(type: "real", nullable: false)
                 },
